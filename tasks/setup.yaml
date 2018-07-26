@@ -1,0 +1,29 @@
+---
+
+- name: setup | install addition packages
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ additional_packages }}"
+
+- name: setup | install gem
+  gem:
+    name: backup
+    state: present
+    version: "{{ gem_backup_version }}"
+    user_install: no
+
+- name: setup | check if installed
+  stat:
+    path: /usr/local/bin/backup
+  register: gem_backup_bin_file
+
+- name: setup | create symlink
+  file:
+    src: /usr/local/bin/backup
+    dest: /usr/bin/backup
+    owner: root
+    group: root
+    mode: 0755
+    state: link
+  when: gem_backup_bin_file.stat.exists

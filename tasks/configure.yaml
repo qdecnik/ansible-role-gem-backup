@@ -1,0 +1,44 @@
+---
+
+- name: configure | create directories for backup (root,tmp)
+  file:
+    dest: "{{ item }}"
+    state: directory
+    recurse: true
+    owner: "{{ gem_backup_user }}"
+    group: "{{ gem_backup_group }}"
+    mode: 0750
+  with_items:
+    - "{{ gem_backup_conf_dir }}"
+    - "{{ gem_backup_root_dir }}"
+    - "{{ gem_backup_tmp_dir }}"
+    - "{{ gem_backup_conf_dir }}/models"
+
+- name: configure | create config for backup app
+  template:
+    src: backup_config.rb
+    dest: "{{ gem_backup_conf_dir }}/config.rb"
+    owner: "{{ gem_backup_user }}"
+    group: "{{ gem_backup_group }}"
+    mode: 0750
+
+- name: configure | create config for backup task
+  template:
+    src: backup_template.rb
+    dest: "{{ gem_backup_conf_dir }}/models/backup_{{ gem_backup_task_name }}.rb"
+    owner: "{{ gem_backup_user }}"
+    group: "{{ gem_backup_group }}"
+    mode: 0750
+
+- name: configure | add cron task
+  cron:
+    name: backup
+    job: "backup perform --config-file={{ gem_backup_conf_dir }}/config.rb --trigger backup_{{ gem_backup_task_name }}"
+    cron_file: backup
+    user: "{{ gem_backup_user }}"
+    month: "{{ gem_backup_cron_month|default('*') }}"
+    weekday: "{{ gem_backup_cron_weekday|default('*') }}"
+    day: "{{ gem_backup_cron_day|default('*') }}"
+    hour: "{{ gem_backup_cron_hour|default('*') }}"
+    minute: "{{ gem_backup_cron_minute }}"
+    state: "{{ gem_backup_cron_state }}"

@@ -1,0 +1,9 @@
+---
+
+__additional_packages:
+    - bzip2
+    - gzip
+    - pbzip2
+    - pigz
+    - xz-utils
+    - zlib1g-dev

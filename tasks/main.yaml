@@ -1,0 +1,10 @@
+---
+
+- name: include preflight tasks
+  include: preflight.yaml
+
+- name: include preflight tasks
+  include: setup.yaml
+
+- name: include configure tasks
+  include: configure.yaml
