@@ -39,6 +39,10 @@ gem_backup_postgres: false
 # gem_backup_postgres_username: postgres
 # gem_backup_postgres_password: postgres
 
+# backup OpenLDAP
+gem_backup_openldap: false
+gem_backup_openldap_slapcat_conf_dir: /etc/openldap/slapd.d
+
 # backup files
 gem_backup_files: false
 # gem_backup_files_add: []
