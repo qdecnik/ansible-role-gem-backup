@@ -1,0 +1,21 @@
+notify_by Mail do |mail|
+    mail.on_success = {{ gem_backup_notify_mail_on_success|lower }}
+    mail.on_warning = {{ gem_backup_notify_mail_on_warning|lower }}
+    mail.on_failure = {{ gem_backup_notify_mail_on_failure|lower }}
+    mail.send_log_on = [:success, :warning, :failure]
+
+    mail.from = "{{ gem_backup_notify_mail_from }}"
+    mail.to = "{{ gem_backup_notify_mail_to }}"
+{% if gem_backup_notify_mail_cc is defined %}
+    mail.cc = "{{ gem_backup_notify_mail_cc }}"
+{% endif %}
+    mail.address = "{{ gem_backup_notify_mail_host }}"
+    mail.port = "{{ gem_backup_notify_mail_port }}"
+    mail.domain = "{{ gem_backup_notify_mail_domain }}"
+{% if gem_backup_notify_mail_authentication is defined %}
+    mail.authentication = "{{ gem_backup_notify_mail_authentication }}"
+{% endif %}
+{% if gem_backup_notify_mail_encryption is defined %}
+    mail.encryption = {{ gem_backup_notify_mail_encryption }}
+{% endif %}
+end

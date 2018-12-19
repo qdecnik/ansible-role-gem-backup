@@ -1,21 +1,20 @@
 ---
 
+# freeze version
 gem_backup_version: 4.4.0
 
+# standard directories
 gem_backup_conf_dir: /etc/backup
 gem_backup_root_dir: /home/backup
 gem_backup_tmp_dir: /tmp/backup
 
+# config files owner, user for cron
 gem_backup_user: root
 gem_backup_group: root
 
 gem_backup_task_name: backup
 
-gem_backup_keep_monthly: 6
-gem_backup_keep_weekly: 3
-gem_backup_keep_daily: 6
-
-# cron task
+# cron settings
 gem_backup_cron_state: absent
 gem_backup_cron_hour: 1
 gem_backup_cron_minute: 0
@@ -23,81 +22,122 @@ gem_backup_cron_weekday: "*"
 gem_backup_cron_day: "*"
 gem_backup_cron_month: "*"
 
-# backup MySQL
+# Backup keep files
+gem_backup_keep_monthly: 6
+gem_backup_keep_weekly: 4
+gem_backup_keep_daily: 6
+
+# ------------------
+# Databases
+# MySQL
 gem_backup_mysql: false
-# gem_backup_mysql_dump: false
-# gem_backup_mysql_xtrabackup: false
-# gem_backup_mysql_db_host: localhost
-# gem_backup_mysql_db_port: 3306
+gem_backup_mysql_db_host: localhost
+gem_backup_mysql_db_port: 3306
 # gem_backup_mysql_username: root
 # gem_backup_mysql_password: root
+# gem_backup_mysql_db_name: db
 
-# backup PostgreSQL
+# PostgreSQL
 gem_backup_postgres: false
-# gem_backup_postgres_db_host: localhost
-# gem_backup_postgres_db_port: 5432
+gem_backup_postgres_db_host: localhost
+gem_backup_postgres_db_port: 5432
 # gem_backup_postgres_username: postgres
 # gem_backup_postgres_password: postgres
+# gem_backup_postgres_db_name: db
 
-# backup OpenLDAP
+# OpenLDAP
 gem_backup_openldap: false
+gem_backup_openldap_db_name: 0
 gem_backup_openldap_slapcat_conf_dir: /etc/openldap/slapd.d
+# gem_backup_openldap_slapcat_args: []
 
-# backup files
+# ------------------
+# Archive files
 gem_backup_files: false
+gem_backup_files_tar_options: '-p'
 # gem_backup_files_add: []
-gem_backup_files_exclude: []
+# gem_backup_files_exclude: []
 
-# backup files
-gem_backup_compress: false
-# gem_backup_compress_type: pbzip2
-# gem_backup_compress_ext: bz2
+# ------------------
+# Compress
+gem_backup_compress: true
+gem_backup_compress_type: gzip
+gem_backup_compress_ext: gz
 
-# backup upload to FTP server
+# ------------------
+# Storages
+# ftp
 gem_backup_ftp: false
 # gem_backup_ftp_host: ftp.example.com
-# gem_backup_ftp_port: 21
-# gem_backup_ftp_passive_mode: false
-# gem_backup_ftp_keep: 7
+gem_backup_ftp_port: 21
+gem_backup_ftp_passive_mode: false
+gem_backup_ftp_keep: "keep"
+gem_backup_ftp_timeout: 10
+# gem_backup_ftp_path: "/backup/"
 # gem_backup_ftp_username: ftp
 # gem_backup_ftp_password: ftp
 
-# backup upload to sFTP server
+# SFTP
 gem_backup_sftp: false
 # gem_backup_sftp_host: sftp.example.com
-# gem_backup_sftp_port: 22
-# gem_backup_sftp_keep: 7
+gem_backup_sftp_port: 22
+gem_backup_sftp_keep: "keep"
 # gem_backup_sftp_username: backup
 # gem_backup_sftp_auth_by_pass: true
 # gem_backup_sftp_password: backup
 
-# backup upload to local path
+# s3
+gem_backup_s3: false
+# gem_backup_s3_access_key: ""
+# gem_backup_s3_secret_key: ""
+# gem_backup_s3_region: ""
+# gem_backup_s3_bucket: ""
+# gem_backup_s3_path: ""
+# gem_backup_s3_fog_options: {}
+gem_backup_s3_max_retries: 10
+gem_backup_s3_retry_waitsec: 30
+
+# local
 gem_backup_local: false
 gem_backup_local_path: "{{ gem_backup_root_dir }}"
+gem_backup_local_keep: "keep"
 
+# ------------------
+# Encryptors
+# openssl
 gem_backup_encrypt_openssl: false
 # gem_backup_encrypt_openssl_password: '123456'
 
+# ------------------
+# Notifiers
+# email
 gem_backup_notify_mail: false
+gem_backup_notify_mail_on_success: true
+gem_backup_notify_mail_on_warning: true
+gem_backup_notify_mail_on_failure: true
 # gem_backup_notify_mail_from: root@example.com
 # gem_backup_notify_mail_to: root@example.com
 # gem_backup_notify_mail_cc: ''
 # gem_backup_notify_mail_host: 127.0.0.1
 # gem_backup_notify_mail_port: 25
 # gem_backup_notify_mail_domain: example.com
+# gem_backup_notify_mail_authentication: "plain"
+# gem_backup_notify_mail_encryption: :starttls
 
+# slack
 gem_backup_notify_slack: false
-# gem_backup_notify_slack_on_success: false
-# gem_backup_notify_slack_on_warning: false
-# gem_backup_notify_slack_ob_failure: true
+gem_backup_notify_slack_on_success: true
+gem_backup_notify_slack_on_warning: true
+gem_backup_notify_slack_ob_failure: true
 # gem_backup_notify_slack_url: ''
 # gem_backup_notify_slack_channel: ''
 # gem_backup_notify_slack_botname: ''
 
+# zabbix
 gem_backup_notify_zabbix: false
-# gem_backup_notify_zabbix_on_success: false
-# gem_backup_notify_zabbix_on_warning: false
-# gem_backup_notify_zabbix_on_failure: true
+gem_backup_notify_zabbix_on_success: true
+gem_backup_notify_zabbix_on_warning: true
+gem_backup_notify_zabbix_on_failure: true
 # gem_backup_notify_zabbix_hostname: zabbix
 # gem_backup_notify_zabbix_port: 10051
 # gem_backup_notify_zabbix_service_host: server_name

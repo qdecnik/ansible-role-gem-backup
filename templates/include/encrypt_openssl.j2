@@ -1,0 +1,7 @@
+encrypt_with OpenSSL do |encryption|
+    encryption.password = '{{ gem_backup_encrypt_openssl_password }}'
+    encryption.base64 = true
+    encryption.salt = true
+    # to decrypt, use the following command:
+    # openssl aes-256-cbc -d -base64 -in my_backup.tar.enc -out my_backup.tar
+end

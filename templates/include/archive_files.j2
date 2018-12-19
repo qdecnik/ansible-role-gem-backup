@@ -1,0 +1,11 @@
+archive :files do |archive|
+    archive.tar_options '{{ gem_backup_files_tar_options }}'
+{% for item in gem_backup_files_add %}
+    archive.add '{{ item }}'
+{% endfor %}
+{% if gem_backup_files_exclude is defined %}
+{% for item in gem_backup_files_exclude %}
+    archive.exclude '{{ item }}'
+{% endfor %}
+{% endif %}
+end

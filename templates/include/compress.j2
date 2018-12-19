@@ -1,0 +1,4 @@
+compress_with Custom do |compression|
+    compression.command = "{{ gem_backup_compress_type }}"
+    compression.extension = ".{{ gem_backup_compress_ext }}"
+end

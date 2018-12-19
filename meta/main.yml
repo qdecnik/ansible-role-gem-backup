@@ -2,7 +2,7 @@
 dependencies: []
 
 galaxy_info:
-  author: Maxim Baranov
+  author: Maxim Baranov <maksim.baranov@gmail.com>
   description: Easy full stack backup operations on UNIX-like systems http://backup.github.io/backup/v4/
   company: ""
   license: "license (MIT, BSD)"
@@ -10,7 +10,6 @@ galaxy_info:
   platforms:
     - name: EL
       versions:
-        - 6
         - 7
     - name: Debian
       versions:

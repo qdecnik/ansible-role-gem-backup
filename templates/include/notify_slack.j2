@@ -1,0 +1,13 @@
+notify_by Slack do |slack|
+    slack.on_success = {{ gem_backup_notify_slack_on_success|lower }}
+    slack.on_warning = {{ gem_backup_notify_slack_on_warning|lower }}
+    slack.on_failure = {{ gem_backup_notify_slack_on_failure|lower }}
+
+    slack.webhook_url = "{{ gem_backup_notify_slack_url }}"
+{% if gem_backup_notify_slack_channel is defined %}
+    slack.channel = "{{ gem_backup_notify_slack_channel }}"
+{% endif %}
+{% if gem_backup_notify_slack_botname is defined %}
+    slack.username = "{{ gem_backup_notify_slack_botname }}"
+{% endif %}
+end

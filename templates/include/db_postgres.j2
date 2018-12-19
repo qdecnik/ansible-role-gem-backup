@@ -1,0 +1,11 @@
+database PostgreSQL do |db|
+    db.host = "{{ gem_backup_postgres_db_host }}"
+    db.port = {{ gem_backup_postgres_db_port }}
+    db.username = "{{ gem_backup_postgres_username }}"
+    db.password = "{{ gem_backup_postgres_password }}"
+{% if gem_backup_postgres_db_name is defined %}
+    db.name = "{{ gem_backup_postgres_db_name }}"
+{% else %}
+    db.name = :all
+{% endif %}
+end

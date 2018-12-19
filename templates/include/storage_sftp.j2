@@ -1,0 +1,12 @@
+store_with SFTP do |server|
+    server.ip = "{{ gem_backup_sftp_host }}"
+    server.port = {{ gem_backup_sftp_port }}
+    server.keep = {{ gem_backup_sftp_keep }}
+{% if gem_backup_sftp_path is defined %}
+    server.path = "{{ gem_backup_sftp_path }}"
+{% endif %}
+    server.username = "{{ gem_backup_sftp_username }}"
+{% if gem_backup_sftp_auth_by_pass %}
+    server.password = "{{ gem_backup_sftp_password }}"
+{% endif %}
+end

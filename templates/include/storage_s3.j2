@@ -1,0 +1,16 @@
+store_with S3 do |s3|
+    s3.access_key_id = "{{ gem_backup_s3_access_key }}"
+    s3.secret_access_key = "{{ gem_backup_s3_secret_key }}"
+    s3.region = "{{ gem_backup_s3_region }}"
+    s3.bucket = "{{ gem_backup_s3_bucket }}"
+    s3.path = "{{ gem_backup_s3_path }}"
+    s3.max_retries = {{ gem_backup_s3_max_retries }}
+    s3.retry_waitsec = {{ gem_backup_s3_retry_waitsec }}
+{% if gem_backup_s3_fog_options is defined %}
+    s3.fog_options = {
+    {% for k, v in gem_backup_s3_fog_options.items() %}
+        {{ k }}: {{ v | lower }},
+    {% endfor %}
+    }
+{% endif %}
+end
