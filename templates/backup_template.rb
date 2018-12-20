@@ -52,12 +52,6 @@ end
 {% endif %}
 
 
-{% if gem_backup_local|bool %}
-# storages - local
-{% include "include/storage_local.j2" %}
-{% endif %}
-
-
 {% if gem_backup_sftp|bool %}
 # storages - SFTP
 {% include "include/storage_sftp.j2" %}
@@ -73,6 +67,12 @@ end
 {% if gem_backup_s3|bool %}
 # storages - S3
 {% include "include/storage_s3.j2" %}
+{% endif %}
+
+
+{% if gem_backup_local|bool %}
+# storages - local
+{% include "include/storage_local.j2" %}
 {% endif %}
 
 
