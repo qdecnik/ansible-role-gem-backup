@@ -31,7 +31,7 @@ gem_backup_keep_daily: 6
 # Databases
 # MySQL
 gem_backup_mysql: false
-gem_backup_mysql_db_host: localhost
+gem_backup_mysql_db_host: 127.0.0.1
 gem_backup_mysql_db_port: 3306
 # gem_backup_mysql_username: root
 # gem_backup_mysql_password: root
@@ -39,7 +39,7 @@ gem_backup_mysql_db_port: 3306
 
 # PostgreSQL
 gem_backup_postgres: false
-gem_backup_postgres_db_host: localhost
+gem_backup_postgres_db_host: 127.0.0.1
 gem_backup_postgres_db_port: 5432
 # gem_backup_postgres_username: postgres
 # gem_backup_postgres_password: postgres
