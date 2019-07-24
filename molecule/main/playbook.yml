@@ -1,0 +1,9 @@
+---
+
+- name: Converge
+  hosts: all
+  connection: local
+
+  roles:
+    - role: geerlingguy.ruby
+    - role: ansible-role-gem-backup

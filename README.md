@@ -1,13 +1,11 @@
 # Ansible role: Gem-backup
 
+[![Build Status](https://travis-ci.org/mbaran0v/ansible-role-gem-backup.svg?branch=master)](https://travis-ci.org/mbaran0v/ansible-role-gem-backup) [![License](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg)](https://opensource.org/licenses/MIT) [![GitHub tag](https://img.shields.io/github/tag/mbaran0v/ansible-role-gem-backup.svg)](https://github.com/mbaran0v/ansible-role-gem-backup/tags/) [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+
 Ansible role for [backup](http://backup.github.io/backup/v4/). Currently this works on Debian and RedHat based linux systems. Tested platforms are:
 
 * Ubuntu 16.04
-* Ubuntu 14.04
-* Debian 9
-* Debian 8
 * CentOS 7
-* CentOS 6
 
 Requirements
 ------------
@@ -60,8 +58,6 @@ None
 
 Example Playbook
 ----------------
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
 ```yaml
 - hosts: backup-client
