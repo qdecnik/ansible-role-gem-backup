@@ -1,5 +1,0 @@
-database OpenLDAP do |db|
-    db.name = "{{ gem_backup_openldap_db_name }}"
-    db.slapcat_conf = "{{ gem_backup_openldap_slapcat_conf_dir }}"
-    db.slapcat_args = {{ gem_backup_openldap_slapcat_args|d([]) }}
-end

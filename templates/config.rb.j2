@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+# {{ ansible_managed }}
+
+##
+# Backup v4.x Configuration
+#
+# Documentation: http://backup.github.io/backup
+# Issue Tracker: https://github.com/backup/backup/issues
+
+##
+# Config Options
+#
+# Sets the root path for all relative paths, including default paths.
+root_path '{{ gem_backup_root_path }}'
+#
+# Sets the path where backups are processed until they're stored.
+tmp_path  '{{ gem_backup_tmp_path }}'
+#
+# Sets the path where backup stores persistent information.
+data_path '{{ gem_backup_data_path }}'
+
+Logger.configure do
+    console.quiet = false
+    logfile.max_bytes = 2_000_000
+    syslog.enabled = true
+    syslog.ident = 'backup'
+end

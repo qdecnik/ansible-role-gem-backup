@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+# {{ ansible_managed }}
+
+{% set model_name = item.name %}
+{% set model_label = item.label|d("Backup " + ansible_hostname) %}
+##
+# $ backup perform -t {{ model_name }} [-c <path_to_configuration_file>]
+#
+Model.new(:{{ model_name }}, "{{ model_label }}") do
+
+{% include "include/databases.j2" %}
+{% include "include/files.j2" %}
+{% include "include/storages.j2" %}
+{% include "include/encryptors.j2" %}
+{% include "include/compressors.j2" %}
+{% include "include/notifiers.j2" %}
+
+end

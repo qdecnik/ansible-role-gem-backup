@@ -19,3 +19,10 @@ def test_data_dir(host):
 
     assert f.exists
     assert f.is_directory
+
+
+def test_tmp_dir(host):
+    f = host.file('/home/backup/tmp')
+
+    assert f.exists
+    assert f.is_directory

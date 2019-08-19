@@ -1,44 +1,46 @@
 ---
 
-- name: configure | create directories for backup (root,tmp)
+- name: create directories for backup (root,tmp)
   file:
     dest: "{{ item }}"
     state: directory
-    recurse: true
     owner: "{{ gem_backup_user }}"
     group: "{{ gem_backup_group }}"
     mode: 0750
   with_items:
-    - "{{ gem_backup_conf_dir }}"
-    - "{{ gem_backup_root_dir }}"
-    - "{{ gem_backup_tmp_dir }}"
-    - "{{ gem_backup_conf_dir }}/models"
+    - "{{ gem_backup_root_path }}"
+    - "{{ gem_backup_root_path }}/models"
+    - "{{ gem_backup_data_path }}"
+    - "{{ gem_backup_tmp_path }}"
 
-- name: configure | create config for backup app
+- name: create config for backup app
   template:
-    src: backup_config.rb
-    dest: "{{ gem_backup_conf_dir }}/config.rb"
+    src: config.rb.j2
+    dest: "{{ gem_backup_root_path }}/config.rb"
     owner: "{{ gem_backup_user }}"
     group: "{{ gem_backup_group }}"
-    mode: 0750
+    mode: 0600
 
-- name: configure | create config for backup task
+- name: create config for backup task
   template:
-    src: backup_template.rb
-    dest: "{{ gem_backup_conf_dir }}/models/backup_{{ gem_backup_task_name }}.rb"
+    src: model.rb.j2
+    dest: "{{ gem_backup_root_path }}/models/{{ item.name }}.rb"
     owner: "{{ gem_backup_user }}"
     group: "{{ gem_backup_group }}"
-    mode: 0750
+    mode: 0600
+  with_items:
+    - "{{ gem_backup_models }}"
 
-- name: configure | add cron task
+- name: add cron task
   cron:
-    name: backup
-    job: "backup perform --config-file={{ gem_backup_conf_dir }}/config.rb --trigger backup_{{ gem_backup_task_name }}"
+    name: "Backup job: {{ item.name }}"
     cron_file: backup
+    minute: "{{ item.cron.minute | default(15) }}"
+    hour: "{{ item.cron.hour | default(4) }}"
+    day: "{{ item.cron.day | default(omit) }}"
+    weekday: "{{ item.cron.weekday | default(omit) }}"
     user: "{{ gem_backup_user }}"
-    month: "{{ gem_backup_cron_month|default('*') }}"
-    weekday: "{{ gem_backup_cron_weekday|default('*') }}"
-    day: "{{ gem_backup_cron_day|default('*') }}"
-    hour: "{{ gem_backup_cron_hour|default('*') }}"
-    minute: "{{ gem_backup_cron_minute }}"
-    state: "{{ gem_backup_cron_state }}"
+    job: '/bin/bash -lc "backup perform --trigger {{ item.name }} --config-file {{ gem_backup_root_path }}/config.rb"'
+    state: "{{ item.cron.state | default(absent) }}"
+  with_items:
+    - "{{ gem_backup_models }}"

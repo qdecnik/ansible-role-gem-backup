@@ -1,24 +1,24 @@
 ---
 
-- name: setup | install addition packages
+- name: install additional packages
   package:
     name: "{{ item }}"
     state: present
   with_items: "{{ additional_packages }}"
 
-- name: setup | install gem
+- name: install gem
   gem:
     name: backup
     state: present
     version: "{{ gem_backup_version }}"
     user_install: no
 
-- name: setup | check if installed
+- name: check if installed
   stat:
     path: /usr/local/bin/backup
   register: gem_backup_bin_file
 
-- name: setup | create symlink
+- name: create symlink
   file:
     src: /usr/local/bin/backup
     dest: /usr/bin/backup

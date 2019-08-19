@@ -1,0 +1,62 @@
+{% for model_db in item.databases | d([]) %}
+{% for dbs in gem_backup_databases %}
+{% if dbs.name == model_db %}
+{% if dbs.type == 'mysql' %}
+  ##
+  # MySQL [Database]
+  #
+  database MySQL, :{{ dbs.name }} do |db|
+    # To dump all databases, set `db.name = :all` (or leave blank)
+    db.name               = "{{ dbs.db | d(':all') }}"
+    db.username           = "{{ dbs.username }}"
+{% if dbs.password is defined %}
+    db.password           = "{{ dbs.password }}"
+{% endif %}
+    db.host               = "{{ dbs.host | d('127.0.0.1') }}"
+    db.port               = {{ dbs.port | d(3306) }}
+{% if dbs.socket is defined %}
+    db.socket             = "{{ dbs.socket }}"
+{% endif %}
+    # Note: when using `skip_tables` with the `db.name = :all` option,
+    # table names should be prefixed with a database name.
+    # e.g. ["db_name.table_to_skip", ...]
+    db.skip_tables        = []
+    db.only_tables        = []
+    db.additional_options = {{ dbs.options | d([]) }}
+  end
+{% endif %}
+{% if dbs.type == 'postgresql' %}
+  ##
+  # PostgreSQL [Database]
+  #
+  database PostgreSQL, :{{ dbs.name }} do |db|
+    # To dump all databases, set `db.name = :all` (or leave blank)
+    db.name               = "{{ dbs.db }}"
+    db.username           = "{{ dbs.username | d('postgres') }}"
+{% if dbs.password is defined %}
+    db.password           = "{{ dbs.password }}"
+{% endif %}
+    db.host               = "{{ dbs.host | d('127.0.0.1') }}"
+    db.port               = {{ dbs.port | d(5432) }}
+{% if dbs.socket is defined %}
+    db.socket             = "{{ dbs.socket }}"
+{% endif %}
+    # When dumping all databases, `skip_tables` and `only_tables` are ignored.
+    db.skip_tables        = []
+    db.only_tables        = []
+    db.additional_options = {{ dbs.options | d([]) }}
+  end
+{% endif %}
+{% if dbs.type == 'ldap' %}
+  ##
+  # OpenLDAP [Database]
+  #
+  database OpenLDAP, :{{ dbs.name }} do |db|
+    db.name               = "{{ dbs.db }}"
+    db.slapcat_conf       = "{{ db.slapcat_conf_dir }}"
+    db.slapcat_args       = {{ db.slapcat_args | d([]) }}
+  end
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endfor %}

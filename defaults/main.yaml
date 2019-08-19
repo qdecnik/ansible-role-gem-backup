@@ -1,144 +1,140 @@
 ---
 
-# freeze version
+# version
 gem_backup_version: 4.4.0
 
-# standard directories
-gem_backup_conf_dir: /etc/backup
-gem_backup_root_dir: /home/backup
-gem_backup_tmp_dir: /tmp/backup
+gem_backup_root_path: /etc/backup
+gem_backup_data_path: /home/backup
+gem_backup_tmp_path: "{{ gem_backup_data_path }}/tmp"
 
 # config files owner, user for cron
 gem_backup_user: root
 gem_backup_group: root
 
-gem_backup_task_name: backup
+gem_backup_models: []
+# gem_backup_models:
+#   - name: daily
+#     label:
+#     files:
+#       - etc
+#     databases:
+#       - mysql
+#     notifiers:
+#       - email
+#     storages:
+#       - local
+#     cron:
+#       minute: 15
+#       hour: 4
 
-# cron settings
-gem_backup_cron_state: absent
-gem_backup_cron_hour: 1
-gem_backup_cron_minute: 0
-gem_backup_cron_weekday: "*"
-gem_backup_cron_day: "*"
-gem_backup_cron_month: "*"
+gem_backup_databases: []
+# gem_backup_databases:
+#   - name: mysql
+#     type: mysql
+#     db: example_db # or "" for all
+#     host: 127.0.0.1
+#     port: 3306
+#     username: root
+#     password: root
+#     socket: ""
+#     options: []
+#   - name: postgresql
+#     type: postgresql
+#     db: example_db # or "" for all
+#     host: 127.0.0.1
+#     port: 5432
+#     username: postgres
+#     password: postgres
+#     socket: ""
+#     options: []
+#   - name: ldap
+#     type: ldap
+#     db: 0
+#     conf_dir: /etc/openldap/slapd.d
+#     slapcat_args: []
 
-# Backup keep files
-gem_backup_keep_monthly: 6
-gem_backup_keep_weekly: 4
-gem_backup_keep_daily: 6
+gem_backup_notifiers: []
+# gem_backup_notifiers:
+#   - name: email
+#     type: mail
+#     from: root@example.com
+#     to: root@example.com
+#     cc: ""
+#     bcc: ""
+#     reply_to: ""
+#     address: 127.0.0.1
+#     port: 25
+#     domain: example.com
+#     username: ""
+#     password: ""
+#     authentication: "plain"
+#     encryption: ":starttls"
+#     openssl_verify_mode: "none"
+#     on_success: "true"
+#     on_warning: "true"
+#     on_failure: "true"
+#   - name: slack
+#     type: slack
+#     url: ""
+#     channel: ""
+#     botname: ""
+#     on_success: "true"
+#     on_warning: "true"
+#     on_failure: "true"
+#   - name: http_post
+#     type: http_post
+#     uri: ""
 
-# ------------------
-# Databases
-# MySQL
-gem_backup_mysql: false
-gem_backup_mysql_db_host: 127.0.0.1
-gem_backup_mysql_db_port: 3306
-# gem_backup_mysql_username: root
-# gem_backup_mysql_password: root
-# gem_backup_mysql_db_name: db
+gem_backup_files: []
+# gem_backup_files:
+#   - name: etc-dir
+#     tar_options: "-p"
+#     add:
+#       - /etc
+#     exclude:
+#       - /etc/X11
 
-# PostgreSQL
-gem_backup_postgres: false
-gem_backup_postgres_db_host: 127.0.0.1
-gem_backup_postgres_db_port: 5432
-# gem_backup_postgres_username: postgres
-# gem_backup_postgres_password: postgres
-# gem_backup_postgres_db_name: db
+# openssl only
+gem_backup_encryptors: {}
+# gem_backup_encryptors:
+#   password: example
 
-# OpenLDAP
-gem_backup_openldap: false
-gem_backup_openldap_db_name: 0
-gem_backup_openldap_slapcat_conf_dir: /etc/openldap/slapd.d
-# gem_backup_openldap_slapcat_args: []
+# bzip2 / gzip
+gem_backup_compressors: {}
+# gem_backup_compressors:
+#   type: gzip
+#   level: 6
 
-# ------------------
-# Archive files
-gem_backup_files: false
-gem_backup_files_tar_options: '-p'
-# gem_backup_files_add: []
-# gem_backup_files_exclude: []
-
-# ------------------
-# Compress
-gem_backup_compress: true
-gem_backup_compress_type: gzip
-gem_backup_compress_ext: gz
-
-# ------------------
-# Storages
-# ftp
-gem_backup_ftp: false
-# gem_backup_ftp_host: ftp.example.com
-gem_backup_ftp_port: 21
-gem_backup_ftp_passive_mode: false
-gem_backup_ftp_keep: "keep"
-gem_backup_ftp_timeout: 10
-# gem_backup_ftp_path: "/backup/"
-# gem_backup_ftp_username: ftp
-# gem_backup_ftp_password: ftp
-
-# SFTP
-gem_backup_sftp: false
-# gem_backup_sftp_host: sftp.example.com
-gem_backup_sftp_port: 22
-gem_backup_sftp_keep: "keep"
-# gem_backup_sftp_username: backup
-# gem_backup_sftp_auth_by_pass: true
-# gem_backup_sftp_password: backup
-
-# s3
-gem_backup_s3: false
-# gem_backup_s3_access_key: ""
-# gem_backup_s3_secret_key: ""
-# gem_backup_s3_region: ""
-# gem_backup_s3_bucket: ""
-# gem_backup_s3_path: ""
-# gem_backup_s3_fog_options: {}
-gem_backup_s3_max_retries: 10
-gem_backup_s3_retry_waitsec: 30
-
-# local
-gem_backup_local: false
-gem_backup_local_path: "{{ gem_backup_root_dir }}"
-gem_backup_local_keep: "keep"
-
-# ------------------
-# Encryptors
-# openssl
-gem_backup_encrypt_openssl: false
-# gem_backup_encrypt_openssl_password: '123456'
-
-# ------------------
-# Notifiers
-# email
-gem_backup_notify_mail: false
-gem_backup_notify_mail_on_success: true
-gem_backup_notify_mail_on_warning: true
-gem_backup_notify_mail_on_failure: true
-# gem_backup_notify_mail_from: root@example.com
-# gem_backup_notify_mail_to: root@example.com
-# gem_backup_notify_mail_cc: ''
-# gem_backup_notify_mail_host: 127.0.0.1
-# gem_backup_notify_mail_port: 25
-# gem_backup_notify_mail_domain: example.com
-# gem_backup_notify_mail_authentication: "plain"
-# gem_backup_notify_mail_encryption: :starttls
-
-# slack
-gem_backup_notify_slack: false
-gem_backup_notify_slack_on_success: true
-gem_backup_notify_slack_on_warning: true
-gem_backup_notify_slack_ob_failure: true
-# gem_backup_notify_slack_url: ''
-# gem_backup_notify_slack_channel: ''
-# gem_backup_notify_slack_botname: ''
-
-# zabbix
-gem_backup_notify_zabbix: false
-gem_backup_notify_zabbix_on_success: true
-gem_backup_notify_zabbix_on_warning: true
-gem_backup_notify_zabbix_on_failure: true
-# gem_backup_notify_zabbix_hostname: zabbix
-# gem_backup_notify_zabbix_port: 10051
-# gem_backup_notify_zabbix_service_host: server_name
-# gem_backup_notify_zabbix_item_key: backup.status
+gem_backup_storages: []
+# gem_backup_storages:
+#   - name: local
+#     type: local
+#     path: "{{ gem_backup_root_dir }}"
+#     keep: 14
+#   - name: s3
+#     type: s3
+#     access_key: ""
+#     secret_key: ""
+#     fog_options: {}
+#     region: ""
+#     bucket: ""
+#     path: ""
+#     keep: 14
+#   - name: sftp
+#     type: sftp or scp
+#     username: "backup"
+#     password: "backup"
+#     host: "sftp.example.com"
+#     port: 22
+#     path: "/backup/"
+#     keep: 14
+#   - name: ftp
+#     type: ftp
+#     username: backup
+#     password: backup
+#     host: ftp.example.com
+#     port: 21
+#     path: "/backup/"
+#     keep: 14
+#     passive_mode: false
+#     timeout: 10

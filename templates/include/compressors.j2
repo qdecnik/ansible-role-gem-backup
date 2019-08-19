@@ -1,0 +1,19 @@
+{% if gem_backup_compressors %}
+{% if gem_backup_compressors.type == 'gzip' %}
+  ##
+  # Gzip [Compressor]
+  #
+  compress_with Gzip do |compression|
+    compression.level = {{ gem_backup_compressors.level | d(6) }}
+    compression.rsyncable = true
+  end
+{% endif %}
+{% if gem_backup_compressors.type == 'bzip2' %}
+  ##
+  # Bzip2 [Compressor]
+  #
+  compress_with Bzip2 do |compression|
+    compression.level = {{ gem_backup_compressors.level | d(9) }}
+  end
+{% endif %}
+{% endif %}

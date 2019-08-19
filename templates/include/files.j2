@@ -1,0 +1,20 @@
+{% for model_files in item.files | d([]) %}
+{% for f in gem_backup_files %}
+{% if f.name == model_files %}
+  ##
+  # Archive files [Archive]
+  #
+  archive :{{ f.name }} do |archive|
+    archive.tar_options '{{ f.tar_options | d("-p") }}'
+{% for item in f.add %}
+    archive.add '{{ item }}'
+{% endfor %}
+{% if f.exclude is defined %}
+{% for item in f.exclude %}
+    archive.exclude '{{ item }}'
+{% endfor %}
+{% endif %}
+  end
+{% endif %}
+{% endfor %}
+{% endfor %}

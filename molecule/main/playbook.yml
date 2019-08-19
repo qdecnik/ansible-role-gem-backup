@@ -4,6 +4,11 @@
   hosts: all
   connection: local
 
+  vars_files:
+    - ../resources/vars/ruby.yaml
+
   roles:
+    - role: geerlingguy.repo-epel
+      when: ansible_os_family == 'RedHat'
     - role: geerlingguy.ruby
     - role: ansible-role-gem-backup

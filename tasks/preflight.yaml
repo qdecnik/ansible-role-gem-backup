@@ -1,6 +1,12 @@
 ---
 
-- name: preflight | include OS-specific variables
+- name: native assertion for OS (fail on unsupported systems)
+  assert:
+    that:
+      - not (ansible_os_family == "RedHat" and ansible_distribution_major_version|int < 7)
+    fail_msg: "your OS doesnt support by this roles"
+
+- name: include OS-specific variables
   include_vars: "{{ item }}"
   with_first_found:
     - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yaml"
@@ -8,7 +14,7 @@
     - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yaml"
     - "{{ ansible_os_family }}.yaml"
 
-- name: preflight | define additional_packages
+- name: define additional_packages
   set_fact:
     additional_packages: "{{ __additional_packages | list }}"
   when: additional_packages is not defined
