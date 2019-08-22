@@ -31,6 +31,13 @@
   with_items:
     - "{{ gem_backup_models }}"
 
+- block:
+    - command: backup check -c "{{ gem_backup_root_path }}/config.rb"
+      register: check_command
+  rescue:
+    - debug: var=check_command
+    - fail: msg="fail when validate backup config"
+
 - name: add cron task
   cron:
     name: "Backup job: {{ item.name }}"
