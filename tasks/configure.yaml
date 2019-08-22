@@ -47,7 +47,7 @@
     day: "{{ item.cron.day | default(omit) }}"
     weekday: "{{ item.cron.weekday | default(omit) }}"
     user: "{{ gem_backup_user }}"
-    job: '/bin/bash -lc "backup perform --trigger {{ item.name }} --config-file {{ gem_backup_root_path }}/config.rb"'
+    job: '/bin/bash -lc "{{ item.cron.before|d("date") }} && backup perform --trigger {{ item.name }} --config-file {{ gem_backup_root_path }}/config.rb"'
     state: "{{ item.cron.state | default(absent) }}"
   with_items:
     - "{{ gem_backup_models }}"
