@@ -14,7 +14,8 @@ gem_backup_group: root
 gem_backup_models: []
 # gem_backup_models:
 #   - name: daily
-#     label:
+#     before_hook: ""
+#     after_hook: ""
 #     files:
 #       - etc
 #     databases:

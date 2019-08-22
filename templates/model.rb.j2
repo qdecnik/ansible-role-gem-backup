@@ -8,11 +8,23 @@
 #
 Model.new(:{{ model_name }}, "{{ model_label }}") do
 
+{% if item.before_hook | d("") %}
+before do |model|
+    {{ item.before_hook | indent(4) }}
+end
+{% endif %}
+
 {% include "include/databases.j2" %}
 {% include "include/files.j2" %}
 {% include "include/storages.j2" %}
 {% include "include/encryptors.j2" %}
 {% include "include/compressors.j2" %}
 {% include "include/notifiers.j2" %}
+
+{% if item.after_hook | d("") %}
+after do |model|
+    {{ item.after_hook | indent(4) }}
+end
+{% endif %}
 
 end
