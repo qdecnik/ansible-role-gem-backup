@@ -22,7 +22,7 @@ end
 {% include "include/notifiers.j2" %}
 
 {% if item.after_hook | d("") %}
-after do |model|
+after do |model, exit_status|
     {{ item.after_hook | indent(4) }}
 end
 {% endif %}
