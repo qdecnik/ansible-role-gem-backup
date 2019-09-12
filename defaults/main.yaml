@@ -11,6 +11,7 @@ gem_backup_tmp_path: "{{ gem_backup_data_path }}/tmp"
 gem_backup_user: root
 gem_backup_group: root
 
+gem_backup_models_keep_only_specified: False
 gem_backup_models: []
 # gem_backup_models:
 #   - name: daily

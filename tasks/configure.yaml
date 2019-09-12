@@ -1,6 +1,6 @@
 ---
 
-- name: create directories for backup (root,tmp)
+- name: create directories for root, data, tmp
   file:
     dest: "{{ item }}"
     state: directory
@@ -9,9 +9,22 @@
     mode: 0750
   with_items:
     - "{{ gem_backup_root_path }}"
-    - "{{ gem_backup_root_path }}/models"
     - "{{ gem_backup_data_path }}"
     - "{{ gem_backup_tmp_path }}"
+
+- name: remove old models
+  file:
+    dest: "{{ gem_backup_root_path }}/models"
+    state: absent
+  when: not gem_backup_models_keep_only_specified|bool
+
+- name: create directories for models
+  file:
+    dest: "{{ gem_backup_root_path }}/models"
+    state: directory
+    owner: "{{ gem_backup_user }}"
+    group: "{{ gem_backup_group }}"
+    mode: 0750
 
 - name: create config for backup app
   template:
