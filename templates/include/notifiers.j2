@@ -6,9 +6,9 @@
   # Mail [Notifier]
   #
   notify_by Mail do |mail|
-    mail.on_success           = {{ notty.on_success | d('true') }}
-    mail.on_warning           = {{ notty.on_warning | d('true') }}
-    mail.on_failure           = {{ notty.on_failure | d('true') }}
+    mail.on_success           = {{ notty.on_success | d('true') | lower }}
+    mail.on_warning           = {{ notty.on_warning | d('true') | lower }}
+    mail.on_failure           = {{ notty.on_failure | d('true') | lower }}
 
     mail.from                 = "{{ notty.from }}"
     mail.to                   = "{{ notty.to }}"
@@ -46,9 +46,9 @@
   # HttpPost [Notifier]
   #
   notify_by HttpPost do |post|
-    post.on_success = {{ notty.on_success | d('true') }}
-    post.on_warning = {{ notty.on_success | d('true') }}
-    post.on_failure = {{ notty.on_success | d('true') }}
+    post.on_success = {{ notty.on_success | d('true') | lower }}
+    post.on_warning = {{ notty.on_success | d('true') | lower }}
+    post.on_failure = {{ notty.on_success | d('true') | lower }}
 
     # URI to post the notification to.
     # Port may be specified if needed.
@@ -80,9 +80,9 @@
   # Slack [Notifier]
   #
   notify_by Slack do |slack|
-    slack.on_success = {{ notty.on_success | d('true') }}
-    slack.on_warning = {{ notty.on_success | d('true') }}
-    slack.on_failure = {{ notty.on_success | d('true') }}
+    slack.on_success = {{ notty.on_success | d('true') | lower }}
+    slack.on_warning = {{ notty.on_success | d('true') | lower }}
+    slack.on_failure = {{ notty.on_success | d('true') | lower }}
 
     # The incoming webhook url
     # https://hooks.slack.com/services/xxxxxxxx/xxxxxxxxx/xxxxxxxxxx
@@ -104,9 +104,9 @@
 {% endif %}
 {% if notty.type == 'command' %}
   notify_by Command do |cmd|
-    cmd.on_success = {{ notty.on_success | d('true') }}
-    cmd.on_warning = {{ notty.on_warning | d('true') }}
-    cmd.on_failure = {{ notty.on_failure | d('true') }}
+    cmd.on_success = {{ notty.on_success | d('true') | lower }}
+    cmd.on_warning = {{ notty.on_warning | d('true') | lower }}
+    cmd.on_failure = {{ notty.on_failure | d('true') | lower }}
 
     cmd.command = '{{ notty.cmd }}'
 

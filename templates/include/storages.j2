@@ -49,12 +49,12 @@
     server.username   = "{{ stor.username }}"
     server.password   = "{{ stor.password }}"
     server.ip         = "{{ stor.host }}"
-    server.port       = "{{ stor.port|default(21) }}"
+    server.port       = "{{ stor.port | d(21) }}"
     server.path       = "{{ stor.path }}"
-    server.keep       = {{ stor.keep|default(14) }}
-    server.passive_mode = {{ stor.passive_mode|default(false) }}
+    server.keep       = {{ stor.keep | d(14) }}
+    server.passive_mode = {{ stor.passive_mode | d('false') | lower }}
     # Configures open_timeout and read_timeout for Net::FTP
-    server.timeout      = {{ stor.timeout|default(10) }}
+    server.timeout      = {{ stor.timeout | d(10) }}
   end
 {% endif %}
 {% if stor.type == 'local' %}
@@ -63,7 +63,7 @@
   #
   store_with Local do |local|
     local.path       = "{{ stor.path }}"
-    local.keep       = {{ stor.keep|default(14) }}
+    local.keep       = {{ stor.keep | d(14) }}
   end
 {% endif %}
 {% endif %}

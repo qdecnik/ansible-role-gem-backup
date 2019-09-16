@@ -16,7 +16,7 @@
   file:
     dest: "{{ gem_backup_root_path }}/models"
     state: absent
-  when: not gem_backup_models_keep_only_specified|bool
+  when: gem_backup_models_keep_only_specified|bool
 
 - name: create directories for models
   file:

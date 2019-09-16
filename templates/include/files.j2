@@ -4,7 +4,7 @@
   ##
   # Archive files [Archive]
   #
-  archive :{{ f.name }} do |archive|
+  archive :"{{ f.name }}" do |archive|
     archive.tar_options '{{ f.tar_options | d("-p") }}'
 {% for item in f.add %}
     archive.add '{{ item }}'
