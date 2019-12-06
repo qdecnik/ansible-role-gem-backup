@@ -54,6 +54,17 @@ gem_backup_databases: []
 #     db: 0
 #     conf_dir: /etc/openldap/slapd.d
 #     slapcat_args: []
+#   - name: mongodb
+#     type: mongodb
+#     db: example_db # or "" for all
+#     host: 127.0.0.1
+#     port: 27017
+#     username: admin
+#     password: admin
+#     only_collections: ['only', 'these' 'collections']
+#     additional_options: []
+#     lock: false
+#     oplog: false
 
 gem_backup_notifiers: []
 # gem_backup_notifiers:

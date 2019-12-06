@@ -57,6 +57,25 @@
     db.slapcat_args       = {{ db.slapcat_args | d([]) }}
   end
 {% endif %}
+{% if dbs.type == 'mongodb' %}
+  ##
+  # MongoDB [Database]
+  #
+  database MongoDB, ":{{ dbs.name }}" do |db|
+    db.name               = "{{ dbs.db }}"
+    db.username           = "{{ dbs.username }}"
+    db.password           = "{{ dbs.password }}"
+    db.host               = "{{ dbs.host | d('127.0.0.1') }}"
+    db.port               = {{ dbs.port | d(27017) }}
+    db.ipv6               = false
+{% if dbs.only_collections is defined %}
+    db.only_collections   = {{ dbs.only_collections }}
+{% endif %}
+    db.additional_options = {{ dbs.additional_options | d([]) }}
+    db.lock               = {{ dbs.lock | d('false') }}
+    db.oplog              = {{ dbs.oplog | d('false') }}
+  end
+{% endif %}
 {% endif %}
 {% endfor %}
 {% endfor %}
