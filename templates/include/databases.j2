@@ -65,6 +65,9 @@
     db.name               = "{{ dbs.db }}"
     db.username           = "{{ dbs.username }}"
     db.password           = "{{ dbs.password }}"
+{% if dbs.authdb is defined %}
+    db.authdb             = "{{ dbs.authdb }}"
+{% endif %}
     db.host               = "{{ dbs.host | d('127.0.0.1') }}"
     db.port               = {{ dbs.port | d(27017) }}
     db.ipv6               = false
