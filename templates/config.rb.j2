@@ -2,7 +2,12 @@
 # {{ ansible_managed }}
 
 ##
+{% if gem_backup_version is version('5.0.0', operator='lt') %}
 # Backup v4.x Configuration
+{% endif %}
+{% if gem_backup_version is version('5.0.0', operator='gt') %}
+# Backup v5.x Configuration
+{% endif %}
 #
 # Documentation: http://backup.github.io/backup
 # Issue Tracker: https://github.com/backup/backup/issues
