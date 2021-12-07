@@ -1,7 +1,7 @@
 ---
 
 # freeze version
-gem_backup_version: 4.4.0
+gem_backup_version: 5.0.0.beta.1
 
 # standard directories
 gem_backup_conf_dir: /etc/backup
